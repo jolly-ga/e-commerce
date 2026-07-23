@@ -4,5 +4,9 @@
             <a routerLink="/produtos">Produtos</a> |
             <a routerLink="/carrinho">Carrinho</a>
         </nav>
-        <hr />
+        <hr>
+        <button (click)="login()">login</button>
+        <button (click)="logout()">logout</button>
+        <P>Status {{usuarioLogado() ? 'Logado' : 'Deslogado'}}</P>
+        <hr>
 <router-outlet></router-outlet>
