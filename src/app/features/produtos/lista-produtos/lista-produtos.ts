@@ -18,6 +18,7 @@ import { inject } from '@angular/core';
 export class ListaProdutos {
  //! SIGNALS 
 produtos = signal<{nome: string; preco: number}[]>([]);
+
   carregando = signal(true);
   
   //! método para criar um estado de seleção com signal string | null
@@ -25,10 +26,14 @@ produtos = signal<{nome: string; preco: number}[]>([]);
   //! metodo para criar um estado para carrinho com signal
   carrinho = signal <{nome: string; preco: number}[]>([]);
 
+   erro = signal < string | null > (null);
+
   adicionarAoCarrinho(produto:{nome: string; preco: number}){
     this.carrinho.update(listaAtual => [...listaAtual, produto]
     );
   }
+ 
+
  //!função para exibir produtos selecionados
   exibirProduto(nome: string){
     console.log('Produto Selecionado: ', nome);
@@ -69,7 +74,8 @@ private produtosService = inject(produtosService);
 
 //===================metodo http clint (API)==================
 carregarProdutos(){
-this.carregando.set(true);
+this.erro.set(null); //! limpar o erro antes de fazer a requisição
+this.carregando.set(true);//! ativar o sinal de carregamento
 this.produtosService.buscarProdutos().subscribe({
   next: (dados) => {
     const produtos = this.produtosService.transformarProdutos(dados);
@@ -78,7 +84,9 @@ this.produtosService.buscarProdutos().subscribe({
   },
   error: (erro) => {
     console.error('Erro ao carregar produtos: ', erro);
+    this.erro.set('Erro ao carregar produtos. Por favor, tente novamente!');
     this.carregando.set(false);
+
   }
 });
 }
