@@ -17,8 +17,8 @@
         <app-produto
         [nome]="item.nome"
         [preco]="item.preco"
+        (produtoAdicionado)="adicionarAoCarrinho($event)"
         >
-
         </app-produto>
     }
 }
