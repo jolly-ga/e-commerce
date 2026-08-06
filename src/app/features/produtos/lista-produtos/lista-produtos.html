@@ -11,7 +11,7 @@
     <button (click)="carregarProdutos()">Tente novamente</button>
 }
 @if(!carregando() && !erro()){
-    <p><strong>Quantidade de produtos:</strong> {{totalProdutos}}</p>
+    <p><strong>Quantidade de produtos:</strong> {{totalProdutos()}}</p>
     <hr>
     @for(item of produtos(); track $index){
         <app-produto
