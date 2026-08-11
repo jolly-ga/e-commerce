@@ -20,7 +20,12 @@ export const routes: Routes = [
             import('./features/carrinho/carrinho/carrinho')
         .then ((m) => m.Carrinho),
     },
+    {
+        path:'chekout',
+        loadComponent: () =>
+            import('./features/chekout/chekout/chekout').then((m)=> m.Chekout),
+    },
        {path:'**',
        redirectTo: '',
-}
+},
 ];
