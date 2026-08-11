@@ -23,7 +23,7 @@ export const routes: Routes = [
     {
         path:'chekout',
         loadComponent: () =>
-            import('./features/chekout/chekout/chekout').then((m)=> m.Chekout),
+            import('./features/checkout/checkout/checkout').then((m)=> m.Checkout),
     },
        {path:'**',
        redirectTo: '',
