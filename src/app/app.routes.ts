@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { authGuard } from "./core/auth.guard";
 
+
 export const routes: Routes = [
     {
         path:'', //router para raiz localhost:4200/
@@ -22,8 +23,15 @@ export const routes: Routes = [
     },
     {
         path:'chekout',
+        canActivate: [authGuard],
         loadComponent: () =>
             import('./features/checkout/checkout/checkout').then((m)=> m.Checkout),
+    },
+
+    {
+        path:'login',
+        loadComponent: () =>
+            import ('./features/login/login/login').then((m) => m.Login),
     },
        {path:'**',
        redirectTo: '',
