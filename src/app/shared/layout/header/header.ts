@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { CarrinhoService } from '../../../core/services/carrinho.service';
 import { inject } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,11 @@ export class Header {
   usuarioLogado = this.authService.usuarioLogado;
   usuarioAtual = this.authService.usuarioAtual;
 
+  private router = inject(Router);
+
+  
   sair(){
     this.authService.logout();
+    this.router.navigateByUrl('./login');
   }
 }

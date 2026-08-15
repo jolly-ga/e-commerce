@@ -8,6 +8,8 @@
     <button mat-button routerLink="/carrinho">Carrinho {{quantidadeHeader()}}</button>
     <button mat-button routerLink="/chekout">Checkout</button>
 
+<button mat-button routerLink="/admin"> Admin</button>
+
 @if(usuarioLogado()){
     <span class="email-usuario">{{usuarioAtual()?.email}}</span>
     <button type="button" (click)="sair()">Sair</button>
