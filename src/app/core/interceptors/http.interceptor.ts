@@ -4,6 +4,7 @@ import { catchError } from "rxjs";
 import { throwError } from "rxjs";
 import {inject} from "@angular/core";
 import { AuthService } from "../services/auth.service";
+import { Router } from '@angular/router';
 
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
@@ -11,6 +12,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
     console.log('Interceptando Requisição: ', req.url);
     //!aqui voce pode adicionar logica para modificar a requisição
     const authService = inject(AuthService);
+    const router = inject(Router);
     const token = authService.obterToken();
     const novaReq = token?
     req.clone({
@@ -24,15 +26,31 @@ return next(novaReq).pipe(
         next: (event) => console.log ('Responde: ', event),
         error: (error) => console.error('Erro de Requisição: ', error)
     }),
+
+    
     catchError((error) =>{
      console.error('ERRO GLOBAL: ', error);
+     authService.logout();
+     router.navigateByUrl('/login');
+
+
      if(error.status ==401){
         //aqui voce poe adicionar logica para lidar com erros
         console.warn('Usuario não autorizado!');
      }
+
+
      if (error.status == 500){
         console.warn('Erro interno do servidor!');
      }
+
+     if(error.status === 403){
+        console.warn('acesso Proibido, Usuário sem Permissão!');
+        router.navigateByUrl('/produtos');
+     }
+
+
+
      return throwError(() => error);
 
     }),
