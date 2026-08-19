@@ -3,7 +3,7 @@ import { tap } from "rxjs";
 import { catchError } from "rxjs";
 import { throwError } from "rxjs";
 import {inject} from "@angular/core";
-import { AuthService } from "../services/auth.service";
+import { AuthFacade } from "../facades/auth.facade";
 import { Router } from '@angular/router';
 
 
@@ -11,9 +11,9 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
 
     console.log('Interceptando Requisição: ', req.url);
     //!aqui voce pode adicionar logica para modificar a requisição
-    const authService = inject(AuthService);
+    const authFacade = inject(AuthFacade);
     const router = inject(Router);
-    const token = authService.obterToken();
+    const token = authFacade.obterToken();
     const novaReq = token?
     req.clone({
         setHeaders: {
@@ -30,7 +30,7 @@ return next(novaReq).pipe(
     
     catchError((error) =>{
      console.error('ERRO GLOBAL: ', error);
-     authService.logout();
+     authFacade.sair();
      router.navigateByUrl('/login');
 
 
