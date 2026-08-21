@@ -19,6 +19,7 @@
         [nome]="item.nome"
         [preco]="item.preco"
         (produtoAdicionado)="adicionarAoCarrinho($event)"
+        (produtoAdicionado)="adicionarAoCarrinho($event)"
         >
         </app-produto>
     
@@ -26,11 +27,6 @@
     }
 </section>
 }
-<h2>Carrinho</h2>
-@for(item of carrinhoFacade.itensCarrinho(); track $index) {
-    <p>{{item.nome}} - {{item.preco | precoFormatado}}</p>
-    
-}
-<hr>
+
 <p> <strong>Quantidade de itens no carrinho: </strong>{{carrinhoFacade.quantidadeCarrinho() }} </p>
 <p> <strong>Valor total do carrinho: </strong>{{carrinhoFacade.totalCarrinho() |precoFormatado}}</p>
